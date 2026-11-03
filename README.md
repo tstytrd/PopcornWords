@@ -150,4 +150,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 - **Dolch Word List** — Edward William Dolch, Ph.D. (1936)
 - **Word frequency ordering** — *The Jumbo Book of Sight Word Practice Pages* by Immacula A. Rhodes, Scholastic Teaching Resources (2013)
-- Built with ❤️ for early readers everywhere
+- Special Thanks & Guidance — Ms. Wilcer from St. Giles School, for providing essential materials and thoughtful guidance.
+- Inspiration — My kids, who gave me the spark and motivation to bring this idea to life.
+- Built with ❤️ for early readers everywhere using Google Antigravity (Gemini 3.8 Flash), Android Studio.
