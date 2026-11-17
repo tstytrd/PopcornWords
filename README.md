@@ -122,7 +122,7 @@ PopcornWords/
 ### Build & Run
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/PopcornWords.git
+   git clone https://github.com/tstytrd/PopcornWords.git
    ```
 2. Open the project in **Android Studio**
 3. Connect an Android device or start an emulator

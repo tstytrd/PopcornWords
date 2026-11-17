@@ -60,4 +60,4 @@ We may periodically update this Privacy Policy. Any updates will be posted on th
 If you have any questions, concerns, or requests regarding this Privacy Policy or Popcorn Words, please contact us at:
 
 - **Developer:** Popcorn Words Team
-- **Email:** [YOUR_SUPPORT_EMAIL@example.com]
+- **Email:** jfuent2@gmail.com
