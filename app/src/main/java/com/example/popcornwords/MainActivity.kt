@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -389,7 +390,7 @@ fun PracticeScreen(speechRecognizer: SpeechRecognizer, navController: NavControl
         ) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -634,7 +635,7 @@ fun ParentDashboardScreen(navController: NavController, wordDao: WordDao) {
                         }
                     } else {
                         IconButton(onClick = { navController.navigateUp() }) {
-                            Icon(Icons.Default.ArrowBack, "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                         }
                     }
                 },
@@ -908,6 +909,14 @@ fun DolchWordRow(
             .padding(horizontal = 10.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        // Checkbox for multi-select deletion
+        Checkbox(
+            checked = isSelectedForDelete,
+            onCheckedChange = { onToggleDeleteSelect() },
+            modifier = Modifier.size(32.dp)
+        )
+        Spacer(modifier = Modifier.width(2.dp))
+
         // Switch to enable / disable quizzing this specific word
         Switch(
             checked = entity.isEnabled,
