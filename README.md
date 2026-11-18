@@ -9,6 +9,11 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/tstytrd/PopcornWords/releases/latest"><img src="https://img.shields.io/github/v/release/tstytrd/PopcornWords?style=flat-square&color=orange" alt="Latest Release" /></a>
+  <a href="https://github.com/tstytrd/PopcornWords/releases/latest"><img src="https://img.shields.io/badge/Download-APK%20(v1.0)-success?style=flat-square&logo=android" alt="Download APK" /></a>
+</p>
+
+<p align="center">
   <img src="https://img.shields.io/badge/Platform-Android-green?logo=android" alt="Platform" />
   <img src="https://img.shields.io/badge/Language-Kotlin-purple?logo=kotlin" alt="Language" />
   <img src="https://img.shields.io/badge/UI-Jetpack%20Compose-blue?logo=jetpackcompose" alt="UI Framework" />
