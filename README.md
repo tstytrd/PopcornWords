@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/tstytrd/PopcornWords/releases/latest"><img src="https://img.shields.io/github/v/release/tstytrd/PopcornWords?style=flat-square&color=orange" alt="Latest Release" /></a>
-  <a href="https://github.com/tstytrd/PopcornWords/releases/latest"><img src="https://img.shields.io/badge/Download-APK%20(v1.0)-success?style=flat-square&logo=android" alt="Download APK" /></a>
+  <a href="https://github.com/tstytrd/PopcornWords/releases/latest"><img src="https://img.shields.io/badge/Download-APK%20(v2.1.0)-success?style=flat-square&logo=android" alt="Download APK" /></a>
 </p>
 
 <p align="center">
@@ -34,6 +34,14 @@ Parents have full control through a **math-gated dashboard** where they can sele
 ---
 
 ## ✨ Features
+
+### 📖 Learn Mode (Tap-to-Hear Audio)
+- **Interactive Word Cards** — Children can browse active words by grade level tab
+- **Instant Audio Pronunciation** — Tap any word card with tactile bounce animation to hear it clearly via Android's Text-to-Speech (TTS)
+- **Self-Paced Exploration** — Allows kids to familiarize themselves with vocabulary before practicing
+
+### 🎮 Games Mode (Coming Soon)
+- Fun upcoming mini-games, flashcard challenges, and timed popcorn-popping games to reinforce sight word mastery
 
 ### 🎤 Speech-Powered Practice
 - **Hold-to-talk microphone button** — press and hold to speak, release to submit

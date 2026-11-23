@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.speech.tts.TextToSpeech
+import com.example.popcornwords.ui.LearnScreen
+import com.example.popcornwords.ui.GamesComingSoonScreen
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -62,6 +65,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var speechRecognizer: SpeechRecognizer
     private lateinit var wordDao: WordDao
+    private var tts: TextToSpeech? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
@@ -75,11 +79,17 @@ class MainActivity : ComponentActivity() {
 
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
         wordDao = AppDatabase.getDatabase(this).wordDao()
+        tts = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                tts?.language = Locale.US
+                tts?.setSpeechRate(0.85f)
+            }
+        }
 
         setContent {
             PopcornWordsTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    AppNavigation(speechRecognizer, wordDao)
+                    AppNavigation(speechRecognizer, wordDao, tts)
                 }
             }
         }
@@ -88,6 +98,8 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         speechRecognizer.destroy()
+        tts?.stop()
+        tts?.shutdown()
     }
 }
 
@@ -95,11 +107,13 @@ class MainActivity : ComponentActivity() {
 // NAVIGATION
 // ─────────────────────────────────────────────
 @Composable
-fun AppNavigation(speechRecognizer: SpeechRecognizer, wordDao: WordDao) {
+fun AppNavigation(speechRecognizer: SpeechRecognizer, wordDao: WordDao, tts: TextToSpeech?) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "main_menu") {
         composable("main_menu")        { MainMenuScreen(navController, wordDao) }
         composable("practice")         { PracticeScreen(speechRecognizer, navController, wordDao) }
+        composable("learn")            { LearnScreen(navController, wordDao, tts) }
+        composable("games")            { GamesComingSoonScreen(navController) }
         composable("parent_dashboard") { ParentDashboardScreen(navController, wordDao) }
     }
 }
@@ -133,28 +147,53 @@ fun MainMenuScreen(navController: NavController, wordDao: WordDao) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = { navController.navigate("practice") },
-            modifier = Modifier.fillMaxWidth(0.85f).height(88.dp),
+            modifier = Modifier.fillMaxWidth(0.85f).height(72.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50)),
             enabled = activeWords.isNotEmpty()
         ) {
-            Icon(Icons.Default.PlayArrow, contentDescription = "Play", modifier = Modifier.size(44.dp))
-            Spacer(modifier = Modifier.width(12.dp))
-            Text("Practice!", fontSize = 30.sp)
+            Icon(Icons.Default.Mic, contentDescription = "Practice", modifier = Modifier.size(32.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Text("Practice!", fontSize = 26.sp)
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = { navController.navigate("learn") },
+            modifier = Modifier.fillMaxWidth(0.85f).height(72.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2196F3)),
+            enabled = activeWords.isNotEmpty()
+        ) {
+            Icon(Icons.Default.MenuBook, contentDescription = "Learn", modifier = Modifier.size(32.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Text("Learn", fontSize = 26.sp)
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Button(
+            onClick = { navController.navigate("games") },
+            modifier = Modifier.fillMaxWidth(0.85f).height(72.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800))
+        ) {
+            Icon(Icons.Default.SportsEsports, contentDescription = "Games", modifier = Modifier.size(32.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Text("Games", fontSize = 26.sp)
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedButton(
             onClick = { showMathGate = true },
-            modifier = Modifier.fillMaxWidth(0.85f).height(74.dp)
+            modifier = Modifier.fillMaxWidth(0.85f).height(60.dp)
         ) {
-            Icon(Icons.Default.Settings, contentDescription = "Settings", modifier = Modifier.size(28.dp))
-            Spacer(modifier = Modifier.width(12.dp))
-            Text("Parent Mode", fontSize = 22.sp)
+            Icon(Icons.Default.Settings, contentDescription = "Settings", modifier = Modifier.size(24.dp))
+            Spacer(modifier = Modifier.width(10.dp))
+            Text("Parent Mode", fontSize = 20.sp)
         }
     }
 
@@ -293,7 +332,7 @@ fun PracticeScreen(speechRecognizer: SpeechRecognizer, navController: NavControl
                     val isCorrect = matches.any { match ->
                         val spokenWords = match.lowercase()
                             .replace(Regex("[^a-z0-9 ]"), "")
-                            .split("\\s+".toRegex())
+                            .split(" ".toRegex())
                         spokenWords.contains(target) || match.lowercase().trim() == target
                     }
 
